@@ -1,7 +1,8 @@
-def scale_changed_video(folder, title, scale):
-    import os
-    from moviepy.editor import VideoFileClip, AudioFileClip
+import os
+from moviepy.editor import VideoFileClip, AudioFileClip
 
+
+def scale_changed_video(folder, title, scale):
     video = VideoFileClip('out.mp4')
     audio = AudioFileClip('outshift.wav')
 

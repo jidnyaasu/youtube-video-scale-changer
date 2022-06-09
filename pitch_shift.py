@@ -1,8 +1,9 @@
-def pitch_shift(step):
-    import librosa
-    import soundfile as sf
-    import os
+import librosa
+import soundfile as sf
+import os
 
+
+def pitch_shift(step):
     y, sr = librosa.load('out.wav', sr=44100)
 
     y_shift = librosa.effects.pitch_shift(y, sr=sr, n_steps=step)
