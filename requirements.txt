@@ -1,5 +1,5 @@
 moviepy~=1.0.3
 SoundFile~=0.10.3.post1
-
+yt-dlp~=2022.5.18
 pyrubberband~=0.3.0
 pydub~=0.25.1
