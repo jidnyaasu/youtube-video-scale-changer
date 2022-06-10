@@ -1,5 +1,6 @@
-from tkinter import filedialog
 from tkinter import *
+from tkinter import filedialog
+
 from main import main
 
 root = Tk()
