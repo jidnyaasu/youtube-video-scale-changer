@@ -5,7 +5,7 @@ from scale_changed_video import scale_changed_video
 
 def get_original_video(video_info, folder):
     options = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best',
+        'format': '137+140',
         'postprocessors': [{
             'key': 'FFmpegVideoConvertor',
             'preferedformat': 'mp4',
