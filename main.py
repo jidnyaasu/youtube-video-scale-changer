@@ -1,6 +1,7 @@
 import os
 
-import librosa
+import pydub
+import pyrubberband
 import soundfile as sf
 import yt_dlp
 from moviepy.editor import VideoFileClip, AudioFileClip
@@ -23,12 +24,15 @@ def get_original_video(video_info, folder):
 
 
 def pitch_shift(folder, title, step):
-    y, sr = librosa.load(folder + title + '.f140.m4a')
-
-    y_shift = librosa.effects.pitch_shift(y, sr=sr, n_steps=step)
+    audio = folder + title + '.f140.m4a'
+    sound = pydub.AudioSegment.from_file(audio)
+    sound.export('out.wav', format='wav')
+    y, sr = sf.read('out.wav')
+    y_shift = pyrubberband.pitch_shift(y, sr=sr, n_steps=step)
     sf.write('outshifted.wav', y_shift, sr, format="wav")
 
     os.remove(folder + title + '.f140.m4a')
+    os.remove('out.wav')
 
 
 def scale_changed_video(folder, title, scale):
