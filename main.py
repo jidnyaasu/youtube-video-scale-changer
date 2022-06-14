@@ -8,6 +8,8 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 
 def get_original_video(video_info, folder):
+    if os.path.exists(f"{folder}/{video_info['title']}.mp4"):
+        os.remove(f"{folder}/{video_info['title']}.mp4")
     options = {
         'format': '137+140',
         'postprocessors': [{
