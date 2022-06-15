@@ -1,3 +1,6 @@
+import _tkinter
+import os.path
+import tkinter
 from tkinter import *
 from tkinter import filedialog
 
@@ -15,11 +18,13 @@ def on_click():
 
 def paste():
     clipboard = root.clipboard_get()
+    url.delete(0, tkinter.END)
     url.insert(0, clipboard)
 
 
 def ask_folder():
     folder = filedialog.askdirectory() + '/'
+    output_folder.delete(0, tkinter.END)
     output_folder.insert(0, folder)
 
 
@@ -29,6 +34,13 @@ Label(root, text="Please paste YouTube Video Link here :  ").place(anchor=CENTER
 url = Entry(root, width=50, borderwidth=3)
 url.pack()
 url.place(anchor=CENTER, relx=.4, rely=.2)
+
+try:
+    if root.clipboard_get().__contains__("youtube.com"):
+        url.insert(0, root.clipboard_get())
+except _tkinter.TclError:
+    pass
+
 # Paste button
 Button(root, text="Paste", command=paste).place(anchor=CENTER, relx=.9, rely=.2)
 
@@ -37,6 +49,11 @@ Label(root, text="Please select output folder :  ").place(anchor=CENTER, relx=.2
 output_folder = Entry(root, width=50, borderwidth=3)
 output_folder.pack()
 output_folder.place(anchor=CENTER, relx=.4, rely=.4)
+
+# Defaulting output folder to Videos directory
+videos_directory = os.path.expanduser("~") + "/Videos/"
+output_folder.insert(0, videos_directory)
+
 # Select folder button
 Button(root, text="Select Folder", command=ask_folder).place(anchor=CENTER, relx=.9, rely=.4)
 
