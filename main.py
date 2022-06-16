@@ -5,6 +5,7 @@ import pyrubberband
 import soundfile as sf
 import yt_dlp
 from moviepy.editor import VideoFileClip, AudioFileClip
+from tkinter import *
 
 
 def get_original_video(video_info, folder):
@@ -48,7 +49,7 @@ def scale_changed_video(folder, title, scale):
     os.remove('outshifted.wav')
 
 
-def main(url, scale=0, output_folder='~'):
+def main(root, url, scale=0, output_folder='~'):
     info = yt_dlp.YoutubeDL().extract_info(
         url=url, download=False
     )
@@ -57,4 +58,4 @@ def main(url, scale=0, output_folder='~'):
         pitch_shift(output_folder, info['title'], int(scale))
         scale_changed_video(output_folder, info['title'], scale)
 
-    return "Download complete!"
+    Label(root, text=f"Download Complete!!! Videos stored to {output_folder}").place(anchor=CENTER, relx=.5, rely=.8)
