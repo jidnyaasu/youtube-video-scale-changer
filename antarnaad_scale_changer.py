@@ -2,6 +2,7 @@ import _tkinter
 import os.path
 import tkinter
 from tkinter import *
+from threading import Thread
 from tkinter import filedialog
 
 from main import main
@@ -11,9 +12,11 @@ root.title('Antarnaad Youtube Video Scale Changer')
 root.geometry('600x400+650+300')
 
 
-def on_click():
-    complete = main(url.get(), scale_change.get(), output_folder.get())
-    Label(root, text=complete).place(anchor=CENTER, relx=.5, rely=.8)
+def download():
+    thr = Thread(target=main, args=[root, url.get(), scale_change.get(), output_folder.get()])
+    thr.start()
+    # complete = main(url.get(), scale_change.get(), output_folder.get())
+    Label(root, text="Downloading..... Please wait").place(anchor=CENTER, relx=.5, rely=.8)
 
 
 def paste():
@@ -64,7 +67,7 @@ scale_change.pack()
 scale_change.place(anchor=CENTER, relx=.5, rely=.6)
 
 # Download button
-Button(root, text="Download", command=on_click).place(anchor=CENTER, relx=.5, rely=.7)
+Button(root, text="Download", command=download).place(anchor=CENTER, relx=.5, rely=.7)
 
 # Author info
 author = Label(root, text="Software by: Saurabh Joshi")
