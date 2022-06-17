@@ -7,7 +7,8 @@ import yt_dlp
 from moviepy.editor import VideoFileClip, AudioFileClip
 
 
-def get_original_video(video_info, folder):
+def get_original_video(label, video_info, folder):
+    label.config(text="Downloading..... Please wait")
     if os.path.exists(f"{folder}/{video_info['title']}.mp4"):
         os.remove(f"{folder}/{video_info['title']}.mp4")
     options = {
@@ -55,7 +56,7 @@ def main(label, url, scale=0, output_folder='~'):
         url=url, download=False
     )
     try:
-        get_original_video(info, output_folder)
+        get_original_video(label, info, output_folder)
         if scale:
             pitch_shift(label, output_folder, info['title'], int(scale))
             scale_changed_video(label, output_folder, info['title'], scale)

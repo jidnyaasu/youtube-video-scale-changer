@@ -14,7 +14,6 @@ root.geometry('600x400+650+300')
 
 def download():
     if url.get():
-        label.config(text="Downloading..... Please wait")
         thr = Thread(target=main, args=[label, url.get(), scale_change.get(), output_folder.get()])
         thr.start()
     else:
