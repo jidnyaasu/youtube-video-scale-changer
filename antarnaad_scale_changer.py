@@ -13,10 +13,12 @@ root.geometry('600x400+650+300')
 
 
 def download():
-    thr = Thread(target=main, args=[root, url.get(), scale_change.get(), output_folder.get()])
-    thr.start()
-    # complete = main(url.get(), scale_change.get(), output_folder.get())
-    Label(root, text="Downloading..... Please wait").place(anchor=CENTER, relx=.5, rely=.8)
+    if url.get():
+        label.config(text="Downloading..... Please wait")
+        thr = Thread(target=main, args=[label, url.get(), scale_change.get(), output_folder.get()])
+        thr.start()
+    else:
+        label.config(text="Please paste/enter video link")
 
 
 def paste():
@@ -68,6 +70,11 @@ scale_change.place(anchor=CENTER, relx=.5, rely=.6)
 
 # Download button
 Button(root, text="Download", command=download).place(anchor=CENTER, relx=.5, rely=.7)
+
+# Status message
+label = Label(root, text="")
+label.pack()
+label.place(anchor=CENTER, relx=.5, rely=.8)
 
 # Author info
 author = Label(root, text="Software by: Saurabh Joshi")

@@ -5,7 +5,6 @@ import pyrubberband
 import soundfile as sf
 import yt_dlp
 from moviepy.editor import VideoFileClip, AudioFileClip
-from tkinter import *
 
 
 def get_original_video(video_info, folder):
@@ -26,7 +25,8 @@ def get_original_video(video_info, folder):
         ydl.download([video_info['webpage_url']])
 
 
-def pitch_shift(folder, title, step):
+def pitch_shift(label, folder, title, step):
+    label.config(text=f"Shifting pitch of the audio by {step} steps")
     audio = folder + title + '.f140.m4a'
     sound = pydub.AudioSegment.from_file(audio)
     sound.export('out.wav', format='wav')
@@ -38,7 +38,8 @@ def pitch_shift(folder, title, step):
     os.remove('out.wav')
 
 
-def scale_changed_video(folder, title, scale):
+def scale_changed_video(label, folder, title, scale):
+    label.config(text="Merging video and pitch shifted audio")
     video = VideoFileClip(folder + title + '.f137.mp4')
     audio = AudioFileClip('outshifted.wav')
 
@@ -49,13 +50,15 @@ def scale_changed_video(folder, title, scale):
     os.remove('outshifted.wav')
 
 
-def main(root, url, scale=0, output_folder='~'):
+def main(label, url, scale=0, output_folder='~'):
     info = yt_dlp.YoutubeDL().extract_info(
         url=url, download=False
     )
-    get_original_video(info, output_folder)
-    if scale:
-        pitch_shift(output_folder, info['title'], int(scale))
-        scale_changed_video(output_folder, info['title'], scale)
-
-    Label(root, text=f"Download Complete!!! Videos stored to {output_folder}").place(anchor=CENTER, relx=.5, rely=.8)
+    try:
+        get_original_video(info, output_folder)
+        if scale:
+            pitch_shift(label, output_folder, info['title'], int(scale))
+            scale_changed_video(label, output_folder, info['title'], scale)
+        label.config(text=f"Download Complete!!! Videos stored to {output_folder}")
+    except BaseException:
+        label.config(text="An error occurred! Please close the programme and retry")
