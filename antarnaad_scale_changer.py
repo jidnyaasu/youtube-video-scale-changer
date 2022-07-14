@@ -82,7 +82,6 @@ download_button.pack(expand=True)
 status_message = Label(root, text="")
 status_message.pack(expand=True)
 
-
 # Author info
 author = Label(root, text="Software by: Saurabh Joshi")
 author.pack(expand=True)

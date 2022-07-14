@@ -8,7 +8,7 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 
 def get_original_video(label, video_info, folder):
-    label.config(text="Downloading..... Please wait")
+    label.config(text="Downloading..... Please wait", fg="brown")
     if os.path.exists(f"{folder}/{video_info['title']}.mp4"):
         os.remove(f"{folder}/{video_info['title']}.mp4")
     options = {
@@ -27,7 +27,7 @@ def get_original_video(label, video_info, folder):
 
 
 def pitch_shift(label, folder, title, step):
-    label.config(text=f"Shifting pitch of the audio by {step} steps")
+    label.config(text=f"Shifting pitch of the audio by {step} steps", fg="blue")
     audio = folder + title + '.f140.m4a'
     sound = pydub.AudioSegment.from_file(audio)
     sound.export('out.wav', format='wav')
@@ -40,7 +40,7 @@ def pitch_shift(label, folder, title, step):
 
 
 def scale_changed_video(label, folder, title, scale):
-    label.config(text="Merging video and pitch shifted audio")
+    label.config(text="Merging video and pitch shifted audio", fg="blue")
     video = VideoFileClip(folder + title + '.f137.mp4')
     audio = AudioFileClip('outshifted.wav')
 
@@ -60,6 +60,7 @@ def main(label, url, scale=0, output_folder='~'):
         if scale:
             pitch_shift(label, output_folder, info['title'], int(scale))
             scale_changed_video(label, output_folder, info['title'], scale)
-        label.config(text=f"Download Complete!!! Videos stored to {output_folder}")
-    except BaseException:
-        label.config(text="An error occurred! Please close the programme and retry")
+        label.config(text=f"Download Complete!!! Videos stored to {output_folder}", fg="green")
+    except Exception as e:
+        print(e)
+        label.config(text="An error occurred! Please close the programme and retry", fg="crimson")
