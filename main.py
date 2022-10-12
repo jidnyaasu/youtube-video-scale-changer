@@ -52,15 +52,22 @@ def scale_changed_video(label, folder, title, scale):
 
 
 def main(label, url, scale=0, output_folder='~'):
-    info = yt_dlp.YoutubeDL().extract_info(
-        url=url, download=False
-    )
+    info = None
     try:
-        get_original_video(label, info, output_folder)
-        if scale:
-            pitch_shift(label, output_folder, info['title'], int(scale))
-            scale_changed_video(label, output_folder, info['title'], scale)
-        label.config(text=f"Download Complete!!! Videos stored to {output_folder}", fg="green")
+        info = yt_dlp.YoutubeDL().extract_info(
+            url=url, download=False
+        )
     except Exception as e:
+        label.config(text=f"Please enter valid url", fg="red")
         print(e)
-        label.config(text="An error occurred! Please close the programme and retry", fg="crimson")
+
+    if info:
+        try:
+            get_original_video(label, info, output_folder)
+            if scale:
+                pitch_shift(label, output_folder, info['title'], int(scale))
+                scale_changed_video(label, output_folder, info['title'], scale)
+            label.config(text=f"Download Complete!!! Videos stored to {output_folder}", fg="green")
+        except Exception as e:
+            print(e)
+            label.config(text="An error occurred! Please close the programme and retry", fg="crimson")
