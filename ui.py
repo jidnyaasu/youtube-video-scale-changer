@@ -12,7 +12,7 @@ class DownloaderGui:
         self.root.title(title)
         self.root.configure(bg="#FCF2D8")
         self.root.config(padx=50, pady=20)
-        
+
         # url textbox
         self.url_label = Label(self.root, text="Please paste Video Link here :  ", bg="#FCF2D8")
         self.url_label.grid(column=0, row=0, columnspan=2, pady=(0, 5))

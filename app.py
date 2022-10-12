@@ -1,8 +1,8 @@
 from threading import Thread
 from tkinter import *
-from ui import DownloaderGui
-from main import main
 
+from main import main
+from ui import DownloaderGui
 
 root = Tk()
 title = "Antarnaad Scale Changer"
