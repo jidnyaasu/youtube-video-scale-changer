@@ -12,7 +12,7 @@ app = DownloaderGui(root, title)
 def download(local_app):
     if local_app.url.get():
         thr = Thread(target=main,
-                     args=[local_app.status_message, local_app.url.get(),
+                     args=[local_app.status_message, local_app.download_button, local_app.url.get(),
                            local_app.scale_change.get(), local_app.output_folder.get()])
         thr.start()
     else:

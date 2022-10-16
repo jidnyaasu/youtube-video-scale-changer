@@ -8,16 +8,15 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 
 def get_original_video(label, video_info, folder):
-    label.config(text="Downloading..... Please wait", fg="brown")
     if os.path.exists(f"{folder}/{video_info['title']}.mp4"):
         os.remove(f"{folder}/{video_info['title']}.mp4")
     options = {
-        'format': '137+140',
+        'format': '136/137/mp4/bestvideo,140/m4a/bestaudio',
         'postprocessors': [{
             'key': 'FFmpegVideoConvertor',
             'preferedformat': 'mp4',
         }],
-        'outtmpl': f"{folder}{video_info['title']}.mp4",
+        # 'outtmpl': f"{folder}{video_info['title']}.mp4",
         'keepvideo': True,
         'keepaudio': True,
     }
@@ -51,7 +50,9 @@ def scale_changed_video(label, folder, title, scale):
     os.remove('outshifted.wav')
 
 
-def main(label, url, scale=0, output_folder='~'):
+def main(label, button, url, scale=0, output_folder='~'):
+    label.config(text="Downloading..... Please wait", fg="brown")
+    button.config(state="disabled")
     info = None
     try:
         info = yt_dlp.YoutubeDL().extract_info(
@@ -65,9 +66,12 @@ def main(label, url, scale=0, output_folder='~'):
         try:
             get_original_video(label, info, output_folder)
             if scale:
+                pass
                 pitch_shift(label, output_folder, info['title'], int(scale))
                 scale_changed_video(label, output_folder, info['title'], scale)
             label.config(text=f"Download Complete!!! Videos stored to {output_folder}", fg="green")
         except Exception as e:
             print(e)
             label.config(text="An error occurred! Please close the programme and retry", fg="crimson")
+
+    button.config(state="normal")
